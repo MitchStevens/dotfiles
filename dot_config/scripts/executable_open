@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+files=`timeout 3 find -L ~ -name $1`
+
+echo $files
