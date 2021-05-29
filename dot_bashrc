@@ -1,0 +1,49 @@
+#
+# ~/.bashrc
+#
+
+export TERM=xterm-256color
+export TERMINAL=/usr/local/bin/st
+export EDITOR=/usr/bin/nvim
+export BROWSER=/usr/bin/brave
+export XDG_CONFIG_HOME=~/.config
+export MAKEFLAGS=-j$(($(nproc --all) + 1))
+export DOOMDIR=~/.config/doom.d
+export HISTSIZE=1000000
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+## Use up and down arrow keys for finding a command in history
+## (after writing some letters first).
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+set_bash_prompt() {
+  red="\[\033[38;5;1m\]"
+  yellow="\[\033[38;5;11m\]"
+  white="\[\033[38;5;15m\]"
+  magenta="\[\033[38;5;4m\]"
+  brightPurple="\[\033[38;5;13m\]"
+  dir=$(pwd | sed 's./home/mitch.~.g')
+  dir_len=32
+
+  if [ ${#dir} -lt $dir_len ]; then
+    short_dir=$dir
+  else
+    short_dir="..${dir: -$dir_len}"
+  fi
+
+  PS1=" $brightPurple$short_dir $yellow$ $white"
+}
+PROMPT_COMMAND=set_bash_prompt
+
+echo $(shuf -n 1 ~/.notes/misc/quotes.txt) \
+  | fold -w $(tput cols) -s - \
+  | lolcat
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

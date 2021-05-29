@@ -1,0 +1,61 @@
+alias ls='ls --color=auto'
+alias ll='ls --color=auto -la'
+alias la='ls --color=auto -a'
+alias grep='grep --color=auto'
+alias del=trash-put
+
+alias calcurse='calcurse -D ~/.notes/calcurse -C ~/.notes/calcurse'
+alias ytop='ytop -bp'
+alias weight='$HOME/.config/scripts/weight'
+alias emacs='emacs -nw'
+alias doom='~/.emacs.d/bin/doom'
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+alias dd='dd bs=8M status=progress'
+alias w3m='w3m -o auto_image=FALSE'
+alias todo='~/.notes/misc/todo/todo.sh'
+alias concat_pdf=''
+
+alias rc='source ~/.bashrc'
+
+alias find='find -L'
+
+alias timetable='bat ~/.notes/uni/timetable_2020-sem2.md'
+alias forecast='curl v2.wttr.in/Canberra'
+#alias apts='~/.config/scripts/print_apts.sh | bat --language md'
+alias job_app='cp -r ~/.notes/work/templates'
+
+quote_lines() {
+  xargs printf '\"%s\"\n'
+}
+
+date_sort(){
+  xargs ls -lt | awk -F' ' '{print $NF}'
+}
+
+append_timestamp(){
+  date -r "$1" +%N
+}
+
+function mkcd() {
+  mkdir -p "$1";
+  cd "$1";
+}
+
+function cs() {
+  cd "$1";
+  ls;
+}
+
+function ezpush() {
+  git add -u;
+  git commit -m "ezpush";
+  git push;
+}
+
+#using rsync as mv/cp to use the progress bar
+function cpr() {
+  rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 "$@"
+}
+function mvr() {
+  rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 --remove-source-files "$@"
+}
